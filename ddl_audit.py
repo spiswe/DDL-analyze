@@ -17,9 +17,6 @@ class DDLAudit(BaseEngine):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-        # self.program = "/data/Documents/git/HCA_SQL_Parser/SQLParser/cmake-build-debug/libHCA_SQL_PARSER.so"
-        # self.program = "/".join(os.path.dirname(os.path.abspath(__file__)).split("/")[:-1]) + "/engines/program/libHCA_SQL_PARSER.so"
-        # print(self.program)
         super(DDLAudit, self).__init__()
 
     def _moudle_register(self):
@@ -177,13 +174,7 @@ class DDLAudit(BaseEngine):
             env_python = os.environ.get("__PYVENV_LAUNCHER__")
         else:
             env_python = "python3"
-
-        # p = subprocess.Popen(
-        #     ["python3", '/data/Documents/git/HotDB_Cloud_Analysis/src/packages/thoth_parser_dll.py',
-        #      addinfo.get("stype"), addinfo.get("shost"), str(addinfo.get("sport")), addinfo.get("spwd"),
-        #      str(addinfo.get("sdb")), addinfo.get("taskid")],
-        #     stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
+            
         p = subprocess.Popen(
             [env_python, "/".join(os.path.dirname(os.path.abspath(__file__)).split("/")[:-1]) + '/thoth_parser_dll.py',
              addinfo.get("stype"), addinfo.get("shost"), str(addinfo.get("sport")), addinfo.get("spwd"),
@@ -248,7 +239,6 @@ class DDLAudit(BaseEngine):
                             _desc["level"] = "FAILURE"
                             _result.append(_desc)
 
-            # if "r_properties" in ct_rules and ddl_result.get("sql_type") == "SQLCOM_CREATE_TABLE":
             if "r_properties" in ct_rules:
                 for rule in ct_rules.get("r_properties"):
                     # switch is 1, the rule is enabled
